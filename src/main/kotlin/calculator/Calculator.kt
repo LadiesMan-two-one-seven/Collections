@@ -1,20 +1,12 @@
 package calculator
 
-class Calculator {
+interface Calculator {
 
-    fun add(a: Int, b: Int): Int {
-        return a + b
-    }
+    fun sum(a: Int, b: Int): Int
 
-    fun subtract(a: Int, b: Int): Int {
-        return a - b
-    }
+    fun subtract(a: Int, b: Int): Int
 
-    fun multiplication(a: Int, b: Int): Int {
-        return a * b
-    }
+    fun multiplication(a: Int, b: Int): Int
 
-    fun divide(a: Int, b: Int): Double {
-        return a / b.toDouble()
-    }
+    fun division(a: Int, b: Int): Double
 }

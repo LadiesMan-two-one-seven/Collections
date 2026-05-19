@@ -7,7 +7,7 @@ class NumbersArrayList : NumbersMutableList {
     override var size: Int = 0
         private set
 
-    override fun add(number: Int) {
+    fun growIfNeeded() {
         if (numbers.size == size) {
             val newArray = arrayOfNulls<Int>(numbers.size * 2)
             for (index in numbers.indices) {
@@ -15,8 +15,25 @@ class NumbersArrayList : NumbersMutableList {
             }
             numbers = newArray
         }
+    }
+
+    override fun add(number: Int) {
+        growIfNeeded()
         numbers[size] = number
-        size += 1
+        size++
+    }
+
+    override fun add(index: Int, number: Int) {
+        growIfNeeded()
+        for (i in size until index + 1) {
+            numbers[i] = numbers[i - 1]
+        }
+        numbers[index] = number
+        size++
+    }
+
+    override fun get(index: Int): Int {
+        return numbers[index]!!
     }
 
     override fun removeAt(index: Int) {
@@ -27,7 +44,26 @@ class NumbersArrayList : NumbersMutableList {
         numbers[size] = null
     }
 
-    override fun get(index: Int): Int {
-        return numbers[index]!!
+    override fun remove(number: Int) {
+        for (i in numbers.indices) {
+            if (numbers[i] == number) {
+                removeAt(i)
+                return
+            }
+        }
+    }
+
+    override fun clear() {
+        numbers = arrayOfNulls(10)
+        size = 0
+    }
+
+    override fun contains(number: Int): Boolean {
+        for (i in numbers.indices) {
+            if (numbers[i] == number) {
+                return true
+            }
+        }
+        return false
     }
 }

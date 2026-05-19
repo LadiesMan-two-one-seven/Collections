@@ -2,10 +2,18 @@ package collections
 
 class NumbersArrayList : NumbersMutableList {
 
-    private var numbers = arrayOfNulls<Int>(10)
+    private var numbers = arrayOfNulls<Int>(INITIAL_CAPACITY)
 
     override var size: Int = 0
         private set
+
+    override fun plus(number: Int) {
+        add(number)
+    }
+
+    override fun minus(number: Int) {
+        remove(number)
+    }
 
     fun growIfNeeded() {
         if (numbers.size == size) {
@@ -25,7 +33,7 @@ class NumbersArrayList : NumbersMutableList {
 
     override fun add(index: Int, number: Int) {
         growIfNeeded()
-        for (i in size until index + 1) {
+        for (i in size downTo index + 1) {
             numbers[i] = numbers[i - 1]
         }
         numbers[index] = number
@@ -34,6 +42,10 @@ class NumbersArrayList : NumbersMutableList {
 
     override fun get(index: Int): Int {
         return numbers[index]!!
+    }
+
+    override fun set(index: Int, number: Int) {
+        numbers[index] = number
     }
 
     override fun removeAt(index: Int) {
@@ -54,7 +66,7 @@ class NumbersArrayList : NumbersMutableList {
     }
 
     override fun clear() {
-        numbers = arrayOfNulls(10)
+        numbers = arrayOfNulls(INITIAL_CAPACITY)
         size = 0
     }
 
@@ -65,5 +77,10 @@ class NumbersArrayList : NumbersMutableList {
             }
         }
         return false
+    }
+
+    companion object {
+
+        private const val INITIAL_CAPACITY = 10
     }
 }

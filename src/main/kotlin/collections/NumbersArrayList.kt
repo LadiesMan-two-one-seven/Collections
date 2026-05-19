@@ -1,8 +1,8 @@
 package collections
 
-class NumbersArrayList : NumbersMutableList {
+class NumbersArrayList(initialCapacity: Int = INITIAL_CAPACITY) : NumbersMutableList {
 
-    private var numbers = arrayOfNulls<Int>(INITIAL_CAPACITY)
+    private var numbers = arrayOfNulls<Int>(initialCapacity)
 
     override var size: Int = 0
         private set
@@ -25,12 +25,14 @@ class NumbersArrayList : NumbersMutableList {
         }
     }
 
+    // O(1)
     override fun add(number: Int) {
         growIfNeeded()
         numbers[size] = number
         size++
     }
 
+    // O(n)
     override fun add(index: Int, number: Int) {
         growIfNeeded()
         for (i in size downTo index + 1) {
@@ -40,14 +42,12 @@ class NumbersArrayList : NumbersMutableList {
         size++
     }
 
+    // O(1)
     override fun get(index: Int): Int {
         return numbers[index]!!
     }
 
-    override fun set(index: Int, number: Int) {
-        numbers[index] = number
-    }
-
+    // O(n)
     override fun removeAt(index: Int) {
         for (i in index until size - 1) {
             numbers[i] = numbers[i + 1]
@@ -56,6 +56,7 @@ class NumbersArrayList : NumbersMutableList {
         numbers[size] = null
     }
 
+    // O(n)
     override fun remove(number: Int) {
         for (i in numbers.indices) {
             if (numbers[i] == number) {
@@ -65,11 +66,13 @@ class NumbersArrayList : NumbersMutableList {
         }
     }
 
+    // O(1)
     override fun clear() {
         numbers = arrayOfNulls(INITIAL_CAPACITY)
         size = 0
     }
 
+    // O(n)
     override fun contains(number: Int): Boolean {
         for (i in numbers.indices) {
             if (numbers[i] == number) {

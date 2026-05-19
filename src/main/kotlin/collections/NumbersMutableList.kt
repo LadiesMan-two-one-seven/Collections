@@ -14,8 +14,6 @@ interface NumbersMutableList {
 
     operator fun get(index: Int): Int
 
-    operator fun set(index: Int, number: Int)
-
     fun removeAt(index: Int)
 
     fun remove(number: Int)

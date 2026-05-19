@@ -7,6 +7,18 @@ class NumbersArrayList(initialCapacity: Int = INITIAL_CAPACITY) : NumbersMutable
     override var size: Int = 0
         private set
 
+    fun checkIndex(index: Int) {
+        if (index < 0 || index >= size) {
+            throw IndexOutOfBoundsException("Index: $index Size: $size")
+        }
+    }
+
+    fun checkIndexForAdding(index: Int) {
+        if (index < 0 || index > size) {
+            throw IndexOutOfBoundsException("Index: $index Size: $size")
+        }
+    }
+
     override fun plus(number: Int) {
         add(number)
     }
@@ -18,45 +30,37 @@ class NumbersArrayList(initialCapacity: Int = INITIAL_CAPACITY) : NumbersMutable
     fun growIfNeeded() {
         if (numbers.size == size) {
             val newArray = arrayOfNulls<Int>(numbers.size * 2)
-            for (index in numbers.indices) {
-                newArray[index] = numbers[index]
-            }
+            System.arraycopy(numbers, 0, newArray, 0, size) // low-level method(in c/c++)
             numbers = newArray
         }
     }
 
-    // O(1)
     override fun add(number: Int) {
         growIfNeeded()
         numbers[size] = number
         size++
     }
 
-    // O(n)
     override fun add(index: Int, number: Int) {
+        checkIndexForAdding(index)
         growIfNeeded()
-        for (i in size downTo index + 1) {
-            numbers[i] = numbers[i - 1]
-        }
+        System.arraycopy(numbers, index, numbers, index + 1, size - index)
         numbers[index] = number
         size++
     }
 
-    // O(1)
     override fun get(index: Int): Int {
+        checkIndex(index)
         return numbers[index]!!
     }
 
-    // O(n)
     override fun removeAt(index: Int) {
-        for (i in index until size - 1) {
-            numbers[i] = numbers[i + 1]
-        }
+        checkIndex(index)
+        System.arraycopy(numbers, index + 1, numbers, index, size - index - 1)
         size--
         numbers[size] = null
     }
 
-    // O(n)
     override fun remove(number: Int) {
         for (i in numbers.indices) {
             if (numbers[i] == number) {
@@ -66,13 +70,11 @@ class NumbersArrayList(initialCapacity: Int = INITIAL_CAPACITY) : NumbersMutable
         }
     }
 
-    // O(1)
     override fun clear() {
         numbers = arrayOfNulls(INITIAL_CAPACITY)
         size = 0
     }
 
-    // O(n)
     override fun contains(number: Int): Boolean {
         for (i in numbers.indices) {
             if (numbers[i] == number) {

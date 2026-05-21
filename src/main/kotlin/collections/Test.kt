@@ -1,5 +1,4 @@
 package collections
 
 fun main() {
-
 }

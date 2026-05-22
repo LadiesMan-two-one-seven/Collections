@@ -83,7 +83,7 @@ class NumbersArrayList(initialCapacity: Int = INITIAL_CAPACITY) : NumbersMutable
 
     // O(n)
     override fun contains(number: Int): Boolean {
-        for (i in numbers.indices) {
+        for (i in 0 until size) {
             if (numbers[i] == number) {
                 return true
             }

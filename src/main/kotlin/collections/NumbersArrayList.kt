@@ -35,12 +35,14 @@ class NumbersArrayList(initialCapacity: Int = INITIAL_CAPACITY) : NumbersMutable
         }
     }
 
+    // O(1)
     override fun add(number: Int) {
         growIfNeeded()
         numbers[size] = number
         size++
     }
 
+    // O(n)
     override fun add(index: Int, number: Int) {
         checkIndexForAdding(index)
         growIfNeeded()
@@ -49,11 +51,13 @@ class NumbersArrayList(initialCapacity: Int = INITIAL_CAPACITY) : NumbersMutable
         size++
     }
 
+    // O(1)
     override fun get(index: Int): Int {
         checkIndex(index)
         return numbers[index]!!
     }
 
+    // O(n)
     override fun removeAt(index: Int) {
         checkIndex(index)
         System.arraycopy(numbers, index + 1, numbers, index, size - index - 1)
@@ -61,6 +65,7 @@ class NumbersArrayList(initialCapacity: Int = INITIAL_CAPACITY) : NumbersMutable
         numbers[size] = null
     }
 
+    // O(n)
     override fun remove(number: Int) {
         for (i in numbers.indices) {
             if (numbers[i] == number) {
@@ -75,6 +80,8 @@ class NumbersArrayList(initialCapacity: Int = INITIAL_CAPACITY) : NumbersMutable
         size = 0
     }
 
+
+    // O(n)
     override fun contains(number: Int): Boolean {
         for (i in numbers.indices) {
             if (numbers[i] == number) {

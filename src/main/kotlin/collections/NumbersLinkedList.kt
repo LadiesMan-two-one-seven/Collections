@@ -16,6 +16,7 @@ class NumbersLinkedList : NumbersMutableList {
         remove(number)
     }
 
+    // O(1)
     override fun add(number: Int) {
         val prevLast = last
         last = Node(prevLast, number)
@@ -27,6 +28,7 @@ class NumbersLinkedList : NumbersMutableList {
         size++
     }
 
+    // O(1) if index is 0 or (size) else O(n)
     override fun add(index: Int, number: Int) {
         checkIndexForAdding(index)
         if (index == size) {
@@ -48,11 +50,13 @@ class NumbersLinkedList : NumbersMutableList {
         size++
     }
 
+    // O(n)
     override fun get(index: Int): Int {
         checkIndex(index)
         return getNode(index).item
     }
 
+    // O(n) and not O(n/2)
     private fun getNode(index: Int): Node {
         if (index == 0) return first!!
         if (index == size - 1) return last!!
@@ -72,6 +76,7 @@ class NumbersLinkedList : NumbersMutableList {
         }
     }
 
+    // O(1) if index is 0 or (size) else O(n)
     override fun removeAt(index: Int) {
         checkIndex(index)
         val node = getNode(index)
@@ -92,6 +97,7 @@ class NumbersLinkedList : NumbersMutableList {
         size--
     }
 
+    // O(n)
     override fun remove(number: Int) {
         var node = first
         repeat(size) {
@@ -110,6 +116,7 @@ class NumbersLinkedList : NumbersMutableList {
         size = 0
     }
 
+    // O(n)
     override fun contains(number: Int): Boolean {
         var node = first
         repeat(size) {

@@ -1,11 +1,11 @@
 package collections
 
-import kotlin.random.Random
-
 fun main() {
-    val numbers = MyHashSet<Int>()
+    val numbers = MyLinkedList<Int>()
     repeat(100) {
-        numbers.add(Random.nextInt(1000))
+        numbers.add(it)
     }
-    numbers.elements.forEach(::println)
+    for (number in numbers) {
+        println(number)
+    }
 }

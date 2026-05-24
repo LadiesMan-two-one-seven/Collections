@@ -99,6 +99,31 @@ class MyHashSet<T> : MyMutableSet<T> {
         return abs(element.hashCode() % arraySize)
     }
 
+    override fun iterator(): Iterator<T> {
+        return object : Iterator<T> {
+
+            private var nodeIndex = 0
+            private var nextNode = elements[nodeIndex]
+            private var nextIndex = 0
+
+
+
+            override fun hasNext(): Boolean {
+                return nextIndex < size
+            }
+
+            override fun next(): T {
+                while (nextNode == null) {
+                    nextNode = elements[++nodeIndex]
+                }
+                return nextNode!!.item!!.also {
+                    nextIndex++
+                    nextNode = nextNode?.next
+                }
+            }
+        }
+    }
+
     data class Node<T>(
         val item: T,
         var next: Node<T>? = null

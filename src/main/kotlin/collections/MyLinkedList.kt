@@ -17,7 +17,7 @@ class MyLinkedList<T> : MyMutableList<T> {
     }
 
     // O(1)
-    override fun add(element: T) {
+    override fun add(element: T): Boolean {
         val prevLast = last
         last = Node(prevLast, element)
         if (prevLast == null) {
@@ -26,6 +26,7 @@ class MyLinkedList<T> : MyMutableList<T> {
             prevLast.next = last
         }
         size++
+        return true
     }
 
     // O(1) if index is 0 or (size) else O(n)
@@ -127,6 +128,23 @@ class MyLinkedList<T> : MyMutableList<T> {
             }
         }
         return false
+    }
+
+    override fun iterator(): Iterator<T> {
+        return object : Iterator<T> {
+
+            private var nextNode = first
+
+            override fun hasNext(): Boolean {
+                return nextNode != null
+            }
+
+            override fun next(): T {
+                return nextNode?.item!!.also {
+                    nextNode = nextNode?.next
+                }
+            }
+        }
     }
 
     fun checkIndex(index: Int) {

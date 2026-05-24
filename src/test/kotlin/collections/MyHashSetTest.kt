@@ -3,9 +3,9 @@ package collections
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
-class NumbersMutableSetTest {
+class MyHashSetTest {
 
-    private val numbers = NumbersHashSet()
+    private val numbers = MyHashSet<Int>()
 
     @Test
     fun `When added 100 elements Than size 100`() {

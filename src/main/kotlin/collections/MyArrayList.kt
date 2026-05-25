@@ -3,6 +3,7 @@ package collections
 class MyArrayList<T>(initialCapacity: Int = INITIAL_CAPACITY) : MyMutableList<T> {
 
     private var elements = arrayOfNulls<Any>(initialCapacity)
+    private var modCount = 0
 
     override var size: Int = 0
         private set
@@ -25,6 +26,7 @@ class MyArrayList<T>(initialCapacity: Int = INITIAL_CAPACITY) : MyMutableList<T>
 
     // O(1)
     override fun add(element: T): Boolean {
+        modCount++
         growIfNeeded()
         elements[size] = element
         size++
@@ -33,6 +35,7 @@ class MyArrayList<T>(initialCapacity: Int = INITIAL_CAPACITY) : MyMutableList<T>
 
     // O(n)
     override fun add(index: Int, element: T) {
+        modCount++
         checkIndexForAdding(index)
         growIfNeeded()
         System.arraycopy(elements, index, elements, index + 1, size - index)
@@ -48,6 +51,7 @@ class MyArrayList<T>(initialCapacity: Int = INITIAL_CAPACITY) : MyMutableList<T>
 
     // O(n)
     override fun removeAt(index: Int) {
+        modCount++
         checkIndex(index)
         System.arraycopy(elements, index + 1, elements, index, size - index - 1)
         size--
@@ -56,6 +60,7 @@ class MyArrayList<T>(initialCapacity: Int = INITIAL_CAPACITY) : MyMutableList<T>
 
     // O(n)
     override fun remove(element: T) {
+        // modCount++
         for (i in elements.indices) {
             if (elements[i] == element) {
                 removeAt(i)
@@ -65,6 +70,7 @@ class MyArrayList<T>(initialCapacity: Int = INITIAL_CAPACITY) : MyMutableList<T>
     }
 
     override fun clear() {
+        modCount++
         elements = arrayOfNulls(INITIAL_CAPACITY)
         size = 0
     }
@@ -80,9 +86,10 @@ class MyArrayList<T>(initialCapacity: Int = INITIAL_CAPACITY) : MyMutableList<T>
         return false
     }
 
-    override fun iterator(): Iterator<T> {
-        return object : Iterator<T> {
+    override fun iterator(): MutableIterator<T> {
+        return object : MutableIterator<T> {
 
+            private val currentModCount = modCount
             private var nextIndex = 0
 
             override fun hasNext(): Boolean {
@@ -90,7 +97,12 @@ class MyArrayList<T>(initialCapacity: Int = INITIAL_CAPACITY) : MyMutableList<T>
             }
 
             override fun next(): T {
+                if (currentModCount != modCount) { throw ConcurrentModificationException() }
                 return elements[nextIndex++] as T
+            }
+
+            override fun remove() {
+                TODO("Not yet implemented")
             }
         }
     }

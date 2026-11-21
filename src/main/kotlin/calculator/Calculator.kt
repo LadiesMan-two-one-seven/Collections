@@ -2,7 +2,7 @@ package calculator
 
 interface Calculator {
 
-    fun sum(): Int
+    fun sum(a: Int, b: Int): Int
 
     fun subtract(a: Int, b: Int): Int
 

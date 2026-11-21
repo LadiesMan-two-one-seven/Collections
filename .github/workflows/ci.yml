@@ -15,7 +15,7 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v4
         with:
-          distribution: temirun
+          distribution: temurin
           java-version: 25
       
       - name: Setup Gradle

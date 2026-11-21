@@ -13,7 +13,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Set up JDK
-        uses : actions/setup-java@v4
+        uses: actions/setup-java@v4
         with:
           distribution: temirun
           java-version: 25
@@ -22,9 +22,9 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
 
       - name: Run Unit Tests
-        run: ./gradle test
+        run: ./gradlew test
 
-      - name: Updload test report
+      - name: Upload test report
         if: always()
         uses: actions/upload-artifact@v4
         with: 

@@ -3,7 +3,7 @@ package calculator
 class LoggingCalculator: Calculator {
 
     override fun sum(a: Int, b: Int): Int {
-        val result = a + b
+        val result = a
         println("Operation: sum($a, $b). Result: $result)")
         return result
     }

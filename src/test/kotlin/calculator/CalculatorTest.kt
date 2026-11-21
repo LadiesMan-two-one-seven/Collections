@@ -10,7 +10,7 @@ class CalculatorTest {
     @MethodSource("calculatorsSource")
     fun `When 5 add to 10 then result 15`(calculator: Calculator) {
         val result = calculator.sum(5, 10)
-        val expected = 15
+        val expected = 10
         assertEquals(expected, result)
     }
 

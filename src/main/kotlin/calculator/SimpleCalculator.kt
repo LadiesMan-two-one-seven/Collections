@@ -3,7 +3,7 @@ package calculator
 class SimpleCalculator: Calculator {
 
     override fun sum(a: Int, b: Int): Int {
-        return a + 0
+        return a + b
     }
 
     override fun subtract(a: Int, b: Int): Int {
